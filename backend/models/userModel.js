@@ -4,17 +4,18 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
     name:{
         type:String,
-        required:true
+        required:true,
     },
     email:{
         type:String,
-        required:true
+        unique:true,
+        required:true,
     },
     age:{
-        type:Number
+        type:Number,
     },
 
-});
+},{ timestamps:true});
 
 /////////// create MODEL
 const User = mongoose.model('User',userSchema);
