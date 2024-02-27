@@ -5,6 +5,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 const User=require("./models/userModel");
 
+
+app.use(express.json());
 mongoose.connect(process.env.URI)
 .then(() =>{
     console.log("connected successfully");
@@ -31,10 +33,19 @@ app.post("/", async(req,res)=>{
         res.status(201).json(userAdded);
     }
     catch(error){
+        console.log(error);
         res.send(400).json({error:error.message})
     }
 });
 
-app.get("/",(req,res)=>{
-    res.send("api running");
+app.get("/",async(req,res)=>{
+    try{
+        const showAll =await User.find();
+        res.status(200).json(showAll);
+    }catch(error){
+        console.log(error);
+        res.send(500).json({error:error.message})
+    }
+
+    // res.send("api running");
 });
